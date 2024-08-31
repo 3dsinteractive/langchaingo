@@ -6,14 +6,14 @@ import (
 
 	"github.com/tmc/langchaingo/callbacks"
 	"github.com/tmc/langchaingo/llms"
-	openaiclient "github.com/tmc/langchaingo/llms/llamacpp/internal/llamacppclient"
+	"github.com/tmc/langchaingo/llms/llamacpp/internal/llamacppclient"
 )
 
-type ChatMessage = openaiclient.ChatMessage
+type ChatMessage = llamacppclient.ChatMessage
 
 type LLM struct {
 	CallbacksHandler callbacks.Handler
-	client           *openaiclient.Client
+	client           *llamacppclient.Client
 }
 
 const (
@@ -95,7 +95,7 @@ func (o *LLM) GenerateContent(ctx context.Context, messages []llms.MessageConten
 
 		chatMsgs = append(chatMsgs, msg)
 	}
-	req := &openaiclient.ChatRequest{
+	req := &llamacppclient.ChatRequest{
 		Model:            opts.Model,
 		StopWords:        opts.StopWords,
 		Messages:         chatMsgs,
@@ -107,7 +107,7 @@ func (o *LLM) GenerateContent(ctx context.Context, messages []llms.MessageConten
 		PresencePenalty:  opts.PresencePenalty,
 
 		ToolChoice:           opts.ToolChoice,
-		FunctionCallBehavior: openaiclient.FunctionCallBehavior(opts.FunctionCallBehavior),
+		FunctionCallBehavior: llamacppclient.FunctionCallBehavior(opts.FunctionCallBehavior),
 		Seed:                 opts.Seed,
 		Metadata:             opts.Metadata,
 	}
@@ -117,9 +117,9 @@ func (o *LLM) GenerateContent(ctx context.Context, messages []llms.MessageConten
 
 	// since req.Functions is deprecated, we need to use the new Tools API.
 	for _, fn := range opts.Functions {
-		req.Tools = append(req.Tools, openaiclient.Tool{
+		req.Tools = append(req.Tools, llamacppclient.Tool{
 			Type: "function",
-			Function: openaiclient.FunctionDefinition{
+			Function: llamacppclient.FunctionDefinition{
 				Name:        fn.Name,
 				Description: fn.Description,
 				Parameters:  fn.Parameters,
@@ -186,7 +186,7 @@ func (o *LLM) GenerateContent(ctx context.Context, messages []llms.MessageConten
 
 // CreateEmbedding creates embeddings for the given input texts.
 func (o *LLM) CreateEmbedding(ctx context.Context, inputTexts []string) ([][]float32, error) {
-	embeddings, err := o.client.CreateEmbedding(ctx, &openaiclient.EmbeddingRequest{
+	embeddings, err := o.client.CreateEmbedding(ctx, &llamacppclient.EmbeddingRequest{
 		Input: inputTexts,
 		Model: o.client.EmbeddingModel,
 	})
@@ -222,26 +222,26 @@ func ExtractToolParts(msg *ChatMessage) ([]llms.ContentPart, []llms.ToolCall) {
 }
 
 // toolFromTool converts an llms.Tool to a Tool.
-func toolFromTool(t llms.Tool) (openaiclient.Tool, error) {
-	tool := openaiclient.Tool{
-		Type: openaiclient.ToolType(t.Type),
+func toolFromTool(t llms.Tool) (llamacppclient.Tool, error) {
+	tool := llamacppclient.Tool{
+		Type: llamacppclient.ToolType(t.Type),
 	}
 	switch t.Type {
-	case string(openaiclient.ToolTypeFunction):
-		tool.Function = openaiclient.FunctionDefinition{
+	case string(llamacppclient.ToolTypeFunction):
+		tool.Function = llamacppclient.FunctionDefinition{
 			Name:        t.Function.Name,
 			Description: t.Function.Description,
 			Parameters:  t.Function.Parameters,
 		}
 	default:
-		return openaiclient.Tool{}, fmt.Errorf("tool type %v not supported", t.Type)
+		return llamacppclient.Tool{}, fmt.Errorf("tool type %v not supported", t.Type)
 	}
 	return tool, nil
 }
 
 // toolCallsFromToolCalls converts a slice of llms.ToolCall to a slice of ToolCall.
-func toolCallsFromToolCalls(tcs []llms.ToolCall) []openaiclient.ToolCall {
-	toolCalls := make([]openaiclient.ToolCall, len(tcs))
+func toolCallsFromToolCalls(tcs []llms.ToolCall) []llamacppclient.ToolCall {
+	toolCalls := make([]llamacppclient.ToolCall, len(tcs))
 	for i, tc := range tcs {
 		toolCalls[i] = toolCallFromToolCall(tc)
 	}
@@ -249,11 +249,11 @@ func toolCallsFromToolCalls(tcs []llms.ToolCall) []openaiclient.ToolCall {
 }
 
 // toolCallFromToolCall converts an llms.ToolCall to a ToolCall.
-func toolCallFromToolCall(tc llms.ToolCall) openaiclient.ToolCall {
-	return openaiclient.ToolCall{
+func toolCallFromToolCall(tc llms.ToolCall) llamacppclient.ToolCall {
+	return llamacppclient.ToolCall{
 		ID:   tc.ID,
-		Type: openaiclient.ToolType(tc.Type),
-		Function: openaiclient.ToolFunction{
+		Type: llamacppclient.ToolType(tc.Type),
+		Function: llamacppclient.ToolFunction{
 			Name:      tc.FunctionCall.Name,
 			Arguments: tc.FunctionCall.Arguments,
 		},

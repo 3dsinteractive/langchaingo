@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	openaiclient "github.com/tmc/langchaingo/llms/llamacpp/internal/llamacppclient"
+	"github.com/tmc/langchaingo/llms/llamacpp/internal/llamacppclient"
 )
 
 var (
@@ -18,13 +18,13 @@ var (
 )
 
 // newClient creates an instance of the internal client.
-func newClient(opts ...Option) (*options, *openaiclient.Client, error) {
+func newClient(opts ...Option) (*options, *llamacppclient.Client, error) {
 	options := &options{
 		token:        os.Getenv(tokenEnvVarName),
 		model:        os.Getenv(modelEnvVarName),
 		baseURL:      getEnvs(baseURLEnvVarName, baseAPIBaseEnvVarName),
 		organization: os.Getenv(organizationEnvVarName),
-		apiType:      APIType(openaiclient.APITypeOpenAI),
+		apiType:      APIType(llamacppclient.APITypeOpenAI),
 		httpClient:   http.DefaultClient,
 	}
 
@@ -33,7 +33,7 @@ func newClient(opts ...Option) (*options, *openaiclient.Client, error) {
 	}
 
 	// set of options needed for Azure client
-	if openaiclient.IsAzure(openaiclient.APIType(options.apiType)) && options.apiVersion == "" {
+	if llamacppclient.IsAzure(llamacppclient.APIType(options.apiType)) && options.apiVersion == "" {
 		options.apiVersion = DefaultAPIVersion
 		if options.model == "" {
 			return options, nil, ErrMissingAzureModel
@@ -47,8 +47,8 @@ func newClient(opts ...Option) (*options, *openaiclient.Client, error) {
 		return options, nil, ErrMissingToken
 	}
 
-	cli, err := openaiclient.New(options.token, options.model, options.baseURL, options.organization,
-		openaiclient.APIType(options.apiType), options.apiVersion, options.httpClient, options.embeddingModel)
+	cli, err := llamacppclient.New(options.token, options.model, options.baseURL, options.organization,
+		llamacppclient.APIType(options.apiType), options.apiVersion, options.httpClient, options.embeddingModel)
 	return options, cli, err
 }
 
