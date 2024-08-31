@@ -4,9 +4,9 @@ import (
 	"context"
 	"io"
 
+	"github.com/3dsinteractive/langchaingo/schema"
+	"github.com/3dsinteractive/langchaingo/textsplitter"
 	"github.com/ledongthuc/pdf"
-	"github.com/tmc/langchaingo/schema"
-	"github.com/tmc/langchaingo/textsplitter"
 )
 
 // PDF loads text data from an io.Reader.

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/tmc/langchaingo/llms/llamacpp/internal/llamacppclient"
+	"github.com/3dsinteractive/langchaingo/llms/llamacpp/internal/llamacppclient"
 )
 
 var (

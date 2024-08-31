@@ -3,8 +3,8 @@ package inmemory
 import (
 	"context"
 
+	"github.com/3dsinteractive/langchaingo/llms"
 	cache "github.com/Code-Hex/go-generics-cache"
-	"github.com/tmc/langchaingo/llms"
 )
 
 // InMemory is an in-memory `cache.Backend`.

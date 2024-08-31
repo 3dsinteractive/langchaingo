@@ -1,9 +1,9 @@
 # 🦜️🔗 LangChain Go
 
-[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/tmc/langchaingo)
-[![scorecard](https://goreportcard.com/badge/github.com/tmc/langchaingo)](https://goreportcard.com/report/github.com/tmc/langchaingo)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/3dsinteractive/langchaingo)
+[![scorecard](https://goreportcard.com/badge/github.com/3dsinteractive/langchaingo)](https://goreportcard.com/report/github.com/3dsinteractive/langchaingo)
 [![](https://dcbadge.vercel.app/api/server/2NgDkQDjpQ?compact=true&style=flat)](https://discord.gg/2NgDkQDjpQ)
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/tmc/langchaingo)
+[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/3dsinteractive/langchaingo)
 [<img src="https://github.com/codespaces/badge.svg" title="Open in Github Codespace" width="150" height="20">](https://codespaces.new/tmc/langchaingo)
 
 ⚡ Building applications with LLMs through composability, with Go! ⚡
@@ -15,7 +15,7 @@ This is the Go language implementation of [LangChain](https://github.com/langcha
 ## 📖 Documentation
 
 - [Documentation Site](https://tmc.github.io/langchaingo/docs/)
-- [API Reference](https://pkg.go.dev/github.com/tmc/langchaingo)
+- [API Reference](https://pkg.go.dev/github.com/3dsinteractive/langchaingo)
 
 
 ## 🎉 Examples
@@ -30,8 +30,8 @@ import (
   "fmt"
   "log"
 
-  "github.com/tmc/langchaingo/llms"
-  "github.com/tmc/langchaingo/llms/openai"
+  "github.com/3dsinteractive/langchaingo/llms"
+  "github.com/3dsinteractive/langchaingo/llms/openai"
 )
 
 func main() {
@@ -66,6 +66,6 @@ Here are some links to blog posts and articles on using Langchain Go:
 
 # Contributors
 
-<a href="https://github.com/tmc/langchaingo/graphs/contributors">
+<a href="https://github.com/3dsinteractive/langchaingo/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=tmc/langchaingo" />
 </a>

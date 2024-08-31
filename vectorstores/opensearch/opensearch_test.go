@@ -7,17 +7,17 @@ import (
 	"testing"
 	"time"
 
+	"github.com/3dsinteractive/langchaingo/chains"
+	"github.com/3dsinteractive/langchaingo/embeddings"
+	"github.com/3dsinteractive/langchaingo/llms/openai"
+	"github.com/3dsinteractive/langchaingo/schema"
+	"github.com/3dsinteractive/langchaingo/vectorstores"
+	"github.com/3dsinteractive/langchaingo/vectorstores/opensearch"
 	"github.com/google/uuid"
 	opensearchgo "github.com/opensearch-project/opensearch-go"
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	tcopensearch "github.com/testcontainers/testcontainers-go/modules/opensearch"
-	"github.com/tmc/langchaingo/chains"
-	"github.com/tmc/langchaingo/embeddings"
-	"github.com/tmc/langchaingo/llms/openai"
-	"github.com/tmc/langchaingo/schema"
-	"github.com/tmc/langchaingo/vectorstores"
-	"github.com/tmc/langchaingo/vectorstores/opensearch"
 )
 
 func getEnvVariables(t *testing.T) (string, string, string) {

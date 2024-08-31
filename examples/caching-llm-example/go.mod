@@ -1,8 +1,8 @@
-module github.com/tmc/langchaingo/examples/caching-llm-example
+module github.com/3dsinteractive/langchaingo/examples/caching-llm-example
 
 require (
 	github.com/mitchellh/go-wordwrap v1.0.1
-	github.com/tmc/langchaingo v0.1.12
+	github.com/3dsinteractive/langchaingo v0.1.12
 )
 
 require (

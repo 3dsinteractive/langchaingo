@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/3dsinteractive/langchaingo/llms/openai"
 	"github.com/stretchr/testify/require"
-	"github.com/tmc/langchaingo/llms/openai"
 )
 
 func TestLLMMath(t *testing.T) {

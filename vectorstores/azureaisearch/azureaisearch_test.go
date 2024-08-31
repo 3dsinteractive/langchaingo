@@ -7,14 +7,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/3dsinteractive/langchaingo/chains"
+	"github.com/3dsinteractive/langchaingo/embeddings"
+	"github.com/3dsinteractive/langchaingo/llms/openai"
+	"github.com/3dsinteractive/langchaingo/schema"
+	"github.com/3dsinteractive/langchaingo/vectorstores"
+	"github.com/3dsinteractive/langchaingo/vectorstores/azureaisearch"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
-	"github.com/tmc/langchaingo/chains"
-	"github.com/tmc/langchaingo/embeddings"
-	"github.com/tmc/langchaingo/llms/openai"
-	"github.com/tmc/langchaingo/schema"
-	"github.com/tmc/langchaingo/vectorstores"
-	"github.com/tmc/langchaingo/vectorstores/azureaisearch"
 )
 
 func checkEnvVariables(t *testing.T) {

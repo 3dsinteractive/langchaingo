@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/tmc/langchaingo/callbacks"
-	"github.com/tmc/langchaingo/llms"
-	"github.com/tmc/langchaingo/llms/llamacpp/internal/llamacppclient"
+	"github.com/3dsinteractive/langchaingo/callbacks"
+	"github.com/3dsinteractive/langchaingo/llms"
+	"github.com/3dsinteractive/langchaingo/llms/llamacpp/internal/llamacppclient"
 )
 
 type ChatMessage = llamacppclient.ChatMessage

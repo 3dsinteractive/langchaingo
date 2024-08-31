@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/3dsinteractive/langchaingo/embeddings"
 	"github.com/milvus-io/milvus-sdk-go/v2/entity"
-	"github.com/tmc/langchaingo/embeddings"
 )
 
 const (

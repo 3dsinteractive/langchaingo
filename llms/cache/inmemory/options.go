@@ -3,8 +3,8 @@ package inmemory
 import (
 	"time"
 
+	"github.com/3dsinteractive/langchaingo/llms"
 	cache "github.com/Code-Hex/go-generics-cache"
-	"github.com/tmc/langchaingo/llms"
 )
 
 // Option is a functional argument that configures the Options.
