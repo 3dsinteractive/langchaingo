@@ -103,6 +103,7 @@ func (o *LLM) GenerateContent(ctx context.Context, messages []llms.MessageConten
 		Temperature:      opts.Temperature,
 		MaxTokens:        opts.MaxTokens,
 		N:                opts.N,
+		RepeatPenalty:    opts.RepetitionPenalty,
 		FrequencyPenalty: opts.FrequencyPenalty,
 		PresencePenalty:  opts.PresencePenalty,
 
