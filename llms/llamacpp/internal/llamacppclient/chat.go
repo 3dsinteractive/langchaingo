@@ -412,6 +412,7 @@ func parseStreamingChatResponse(ctx context.Context, r *http.Response, payload *
 			data := strings.TrimPrefix(line, "data:") // here use `data:` instead of `data: ` for compatibility
 			data = strings.TrimSpace(data)
 
+			fmt.Println("[TEST]: " + data)
 			var streamPayload StreamedChatResponsePayload
 			err := json.NewDecoder(bytes.NewReader([]byte(data))).Decode(&streamPayload)
 			if err != nil {
