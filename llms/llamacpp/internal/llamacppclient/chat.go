@@ -287,6 +287,7 @@ type StreamedChatResponsePayload struct {
 	ID      string  `json:"id,omitempty"`
 	Created float64 `json:"created,omitempty"`
 	Model   string  `json:"model,omitempty"`
+	Stop    bool    `json:"stop,omitempty"`
 	Object  string  `json:"object,omitempty"`
 	Choices []struct {
 		Index float64 `json:"index,omitempty"`
@@ -403,11 +404,14 @@ func parseStreamingChatResponse(ctx context.Context, r *http.Response, payload *
 				continue
 			}
 
+			// NOT END YET: (stop==false)
+			// data: {"content":".","stop":false,"id_slot":0,"multimodal":false}
+			// END OF STREAM: (stop==true)
+			// data: {"content":"","id_slot":0,"stop":true,"model":"models/Meta-Llama-3.1-8B-Instruct-IQ2_M.gguf","tokens_predicted":128,"tokens_evaluated":13,"generation_settings":{"n_ctx":2048,"n_predict":-1,"model":"models/Meta-Llama-3.1-8B-Instruct-IQ2_M.gguf","seed":4294967295,"temperature":0.800000011920929,"dynatemp_range":0.0,"dynatemp_exponent":1.0,"top_k":40,"top_p":0.949999988079071,"min_p":0.05000000074505806,"tfs_z":1.0,"typical_p":1.0,"repeat_last_n":64,"repeat_penalty":1.0,"presence_penalty":0.0,"frequency_penalty":0.0,"penalty_prompt_tokens":[],"use_penalty_prompt_tokens":false,"mirostat":0,"mirostat_tau":5.0,"mirostat_eta":0.10000000149011612,"penalize_nl":false,"stop":[],"max_tokens":128,"n_keep":0,"n_discard":0,"ignore_eos":false,"stream":true,"logit_bias":[],"n_probs":0,"min_keep":0,"grammar":"","samplers":["top_k","tfs_z","typical_p","top_p","min_p","temperature"]},"prompt":"Building a website can be done in 10 simple steps:","truncated":false,"stopped_eos":false,"stopped_word":false,"stopped_limit":true,"stopping_word":"","tokens_cached":140,"timings":{"prompt_n":13,"prompt_ms":339.082,"prompt_per_token_ms":26.08323076923077,"prompt_per_second":38.3388089016816,"predicted_n":128,"predicted_ms":4210.415,"predicted_per_token_ms":32.8938671875,"predicted_per_second":30.40080372124838}}
+
 			data := strings.TrimPrefix(line, "data:") // here use `data:` instead of `data: ` for compatibility
 			data = strings.TrimSpace(data)
-			if data == "[DONE]" {
-				return
-			}
+
 			var streamPayload StreamedChatResponsePayload
 			err := json.NewDecoder(bytes.NewReader([]byte(data))).Decode(&streamPayload)
 			if err != nil {
@@ -415,7 +419,15 @@ func parseStreamingChatResponse(ctx context.Context, r *http.Response, payload *
 				responseChan <- streamPayload
 				return
 			}
+
+			if streamPayload.Stop {
+				// Check for end-of-stream signal
+				return
+			}
+
+			// Send the parsed payload to the response channel
 			responseChan <- streamPayload
+
 		}
 		if err := scanner.Err(); err != nil {
 			responseChan <- StreamedChatResponsePayload{Error: fmt.Errorf("error reading streaming response: %w", err)}
